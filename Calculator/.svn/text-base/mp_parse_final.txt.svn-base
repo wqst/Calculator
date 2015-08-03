@@ -1,0 +1,1717 @@
+Monad Autograder
+Testing mp_parse at 2014-07-14 23:42:20
+
+"Now let me erase this before you all copy it down." ~ Alexey Stepanov
+
+Setting up test environment...
+Compiling...
+================================================================
+
+
+Running tests...
+================================================================
+circ_empty  . . . . . . . . . [1 pts] - passed
+circ_sized  . . . . . . . . . [1 pts] - passed
+circ_copy_ctor (asan) . . . . [2 pts] - passed
+circ_move_ctor (asan) . . . . [2 pts] - FAILED: Memory errors detected by ASAN
+circ_copy_assign (asan) . . . [2 pts] - passed
+circ_move_assign (asan) . . . [2 pts] - FAILED: Memory errors detected by ASAN
+circ_swap . . . . . . . . . . [2 pts] - FAILED: unit_tests.cpp:233: [&arr[i] => 0x1bfd7c0] != [ptrs2[i] => 0x1bfd1f0]
+circ_const_subscript  . . . . [2 pts] - passed
+circ_const_at . . . . . . . . [2 pts] - passed
+circ_push_front . . . . . . . [2 pts] - FAILED: unit_tests.cpp:278: Assertion (a[1] == 'c') failed
+circ_push_front_many  . . . . [2 pts] - FAILED: Aborted
+circ_push_back  . . . . . . . [2 pts] - passed
+circ_push_back_many . . . . . [2 pts] - passed
+circ_push_front_move  . . . . [2 pts] - passed
+circ_push_back_move . . . . . [2 pts] - passed
+circ_pop_front  . . . . . . . [2 pts] - passed
+circ_pop_back . . . . . . . . [2 pts] - passed
+circ_erase_1  . . . . . . . . [3 pts] - passed
+circ_erase_2  . . . . . . . . [3 pts] - passed
+circ_weird_copy_ctor  . . . . [1 pts] - passed
+stack_empty . . . . . . . . . [1 pts] - passed
+stack_push_top  . . . . . . . [1 pts] - passed
+stack_push_and_pop  . . . . . [1 pts] - passed
+stack_top_const . . . . . . . [1 pts] - passed
+stack_push_move . . . . . . . [1 pts] - passed
+stack_memory (asan) . . . . . [1 pts] - FAILED: Memory errors detected by ASAN
+stack_push_amortized_constant [1 pts] - passed
+queue_empty . . . . . . . . . [1 pts] - passed
+queue_push_front  . . . . . . [1 pts] - passed
+queue_push_and_pop  . . . . . [1 pts] - passed
+queue_front_const . . . . . . [1 pts] - passed
+queue_push_move . . . . . . . [1 pts] - passed
+queue_memory (asan) . . . . . [1 pts] - FAILED: Memory errors detected by ASAN
+queue_push_amortized_constant [1 pts] - FAILED: Timed out (10000ms)
+ast_terminal  . . . . . . . . [1 pts] - passed
+ast_unary_minus . . . . . . . [1 pts] - passed
+ast_unary_plus  . . . . . . . [1 pts] - passed
+ast_divide  . . . . . . . . . [1 pts] - passed
+ast_exponent  . . . . . . . . [1 pts] - passed
+ast_binary_minus  . . . . . . [1 pts] - passed
+ast_binary_plus . . . . . . . [1 pts] - passed
+ast_times . . . . . . . . . . [1 pts] - passed
+ast_complex (asan)  . . . . . [3 pts] - passed
+parser_plus . . . . . . . . . [1 pts] - passed
+parser_extra_ops  . . . . . . [3 pts] - passed
+parser_extra_numbers  . . . . [3 pts] - passed
+parser_unbalanced_parens  . . [3 pts] - passed
+parser_no_numbers . . . . . . [3 pts] - FAILED: Aborted
+parser_unary  . . . . . . . . [3 pts] - passed
+parser_parens . . . . . . . . [3 pts] - passed
+parser_operator_precedence  . [3 pts] - passed
+parser_operator_associativity [3 pts] - passed
+parser_unary_binary . . . . . [3 pts] - FAILED: unit_tests.cpp:850: Assertion (relequal(root->value(), -2)) failed
+parser_complex  . . . . . . . [8 pts] - passed
+
+
+Total score...
+================================================================
+TOTAL SCORE: 81
+
+
+
+Detailed test output...
+================================================================
+----------------------------------------------------------------
+circ_move_ctor (run under asan) [2 points]
+Result: FAILED: Memory errors detected by ASAN
+Took unknown time (1000ms timeout)
+Output:
+----------------------------------------------------------------
+Running circ_move_ctor [worth 2 points, output below]
+ASAN:SIGSEGV
+=================================================================
+==15517==ERROR: AddressSanitizer: SEGV on unknown address 0x6030010bcb08 (pc 0x000000664d61 sp 0x7fffa40519c0 bp 0x7fffa4053130 T0)
+    #0 0x664d60 in proxy_test::circ_move_ctor(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x664d60)
+    #1 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #2 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #3 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #4 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #5 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #6 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #7 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #8 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #9 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+    #10 0x46cae8 in _start (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x46cae8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV ??:0 proxy_test::circ_move_ctor(util::sizedpipestream<512ul>&)
+==15517==ABORTING
+Result: FAILED:
+Memory Errors Detected by ASAN
+
+----------------------------------------------------------------
+circ_move_assign (run under asan) [2 points]
+Result: FAILED: Memory errors detected by ASAN
+Took unknown time (1000ms timeout)
+Output:
+----------------------------------------------------------------
+Running circ_move_assign [worth 2 points, output below]
+ASAN:SIGSEGV
+=================================================================
+==15528==ERROR: AddressSanitizer: SEGV on unknown address 0x6020010bcb58 (pc 0x00000066b848 sp 0x7fff9a391400 bp 0x7fff9a392bf0 T0)
+    #0 0x66b847 in proxy_test::circ_move_assign(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x66b847)
+    #1 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #2 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #3 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #4 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #5 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #6 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #7 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #8 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #9 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+    #10 0x46cae8 in _start (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x46cae8)
+
+AddressSanitizer can not provide additional info.
+SUMMARY: AddressSanitizer: SEGV ??:0 proxy_test::circ_move_assign(util::sizedpipestream<512ul>&)
+==15528==ABORTING
+Result: FAILED:
+Memory Errors Detected by ASAN
+
+----------------------------------------------------------------
+circ_swap [2 points]
+Result: FAILED: unit_tests.cpp:233: [&arr[i] => 0x1bfd7c0] != [ptrs2[i] => 0x1bfd1f0]
+Took 0ms (1000ms timeout)
+Output:
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+circ_push_front [2 points]
+Result: FAILED: unit_tests.cpp:278: Assertion (a[1] == 'c') failed
+Took 0ms (1000ms timeout)
+Output:
+----------------------------------------------------------------
+
+----------------------------------------------------------------
+circ_push_front_many [2 points]
+Result: FAILED: Aborted
+Took 0ms (1000ms timeout)
+Output:
+----------------------------------------------------------------
+*** glibc detected *** ./proxy: double free or corruption (out): 0x0000000001c001c0 ***
+======= Backtrace: =========
+/lib64/libc.so.6[0x3a26a76166]
+/lib64/libc.so.6[0x3a26a78ca3]
+./proxy[0x4681f9]
+./proxy[0x44c970]
+./proxy[0x41398d]
+./proxy[0x40fa89]
+./proxy[0x40d797]
+./proxy[0x413762]
+./proxy[0x40ef61]
+./proxy[0x40bd55]
+./proxy[0x40b54b]
+./proxy[0x40ad29]
+./proxy[0x40a80a]
+/lib64/libc.so.6(__libc_start_main+0xfd)[0x3a26a1ed1d]
+./proxy[0x409449]
+======= Memory map: ========
+00400000-0054e000 r-xp 00000000 00:10 219029545                          /dev/shm/geigle1/su14/monad/mp_parse_grade/proxy
+0074e000-00750000 rw-p 0014e000 00:10 219029545                          /dev/shm/geigle1/su14/monad/mp_parse_grade/proxy
+01bfd000-01c1e000 rw-p 00000000 00:00 0                                  [heap]
+3a26200000-3a26220000 r-xp 00000000 fd:00 394848                         /lib64/ld-2.12.so
+3a2641f000-3a26420000 r--p 0001f000 fd:00 394848                         /lib64/ld-2.12.so
+3a26420000-3a26421000 rw-p 00020000 fd:00 394848                         /lib64/ld-2.12.so
+3a26421000-3a26422000 rw-p 00000000 00:00 0 
+3a26600000-3a26683000 r-xp 00000000 fd:00 394865                         /lib64/libm-2.12.so
+3a26683000-3a26882000 ---p 00083000 fd:00 394865                         /lib64/libm-2.12.so
+3a26882000-3a26883000 r--p 00082000 fd:00 394865                         /lib64/libm-2.12.so
+3a26883000-3a26884000 rw-p 00083000 fd:00 394865                         /lib64/libm-2.12.so
+3a26a00000-3a26b8b000 r-xp 00000000 fd:00 395093                         /lib64/libc-2.12.so
+3a26b8b000-3a26d8a000 ---p 0018b000 fd:00 395093                         /lib64/libc-2.12.so
+3a26d8a000-3a26d8e000 r--p 0018a000 fd:00 395093                         /lib64/libc-2.12.so
+3a26d8e000-3a26d8f000 rw-p 0018e000 fd:00 395093                         /lib64/libc-2.12.so
+3a26d8f000-3a26d94000 rw-p 00000000 00:00 0 
+3a26e00000-3a26e17000 r-xp 00000000 fd:00 395094                         /lib64/libpthread-2.12.so
+3a26e17000-3a27017000 ---p 00017000 fd:00 395094                         /lib64/libpthread-2.12.so
+3a27017000-3a27018000 r--p 00017000 fd:00 395094                         /lib64/libpthread-2.12.so
+3a27018000-3a27019000 rw-p 00018000 fd:00 395094                         /lib64/libpthread-2.12.so
+3a27019000-3a2701d000 rw-p 00000000 00:00 0 
+3a27200000-3a27202000 r-xp 00000000 fd:00 395096                         /lib64/libdl-2.12.so
+3a27202000-3a27402000 ---p 00002000 fd:00 395096                         /lib64/libdl-2.12.so
+3a27402000-3a27403000 r--p 00002000 fd:00 395096                         /lib64/libdl-2.12.so
+3a27403000-3a27404000 rw-p 00003000 fd:00 395096                         /lib64/libdl-2.12.so
+3a27600000-3a27615000 r-xp 00000000 fd:00 395095                         /lib64/libz.so.1.2.3
+3a27615000-3a27814000 ---p 00015000 fd:00 395095                         /lib64/libz.so.1.2.3
+3a27814000-3a27815000 r--p 00014000 fd:00 395095                         /lib64/libz.so.1.2.3
+3a27815000-3a27816000 rw-p 00015000 fd:00 395095                         /lib64/libz.so.1.2.3
+3a27a00000-3a27a07000 r-xp 00000000 fd:00 395097                         /lib64/librt-2.12.so
+3a27a07000-3a27c06000 ---p 00007000 fd:00 395097                         /lib64/librt-2.12.so
+3a27c06000-3a27c07000 r--p 00006000 fd:00 395097                         /lib64/librt-2.12.so
+3a27c07000-3a27c08000 rw-p 00007000 fd:00 395097                         /lib64/librt-2.12.so
+3a2ae00000-3a2ae25000 r-xp 00000000 fd:00 801232                         /usr/lib64/libpng12.so.0.49.0
+3a2ae25000-3a2b025000 ---p 00025000 fd:00 801232                         /usr/lib64/libpng12.so.0.49.0
+3a2b025000-3a2b026000 rw-p 00025000 fd:00 801232                         /usr/lib64/libpng12.so.0.49.0
+3a2ce00000-3a2ce16000 r-xp 00000000 fd:00 395099                         /lib64/libgcc_s-4.4.7-20120601.so.1
+3a2ce16000-3a2d015000 ---p 00016000 fd:00 395099                         /lib64/libgcc_s-4.4.7-20120601.so.1
+3a2d015000-3a2d016000 rw-p 00015000 fd:00 395099                         /lib64/libgcc_s-4.4.7-20120601.so.1
+7f3b2c94c000-7f3b2c951000 rw-p 00000000 00:00 0 
+7f3b2c951000-7f3b2ca52000 r-xp 00000000 00:26 20845127                   /class/cs225/llvm/lib/libc++.so.1.0
+7f3b2ca52000-7f3b2cc51000 ---p 00101000 00:26 20845127                   /class/cs225/llvm/lib/libc++.so.1.0
+7f3b2cc51000-7f3b2cc58000 rw-p 00100000 00:26 20845127                   /class/cs225/llvm/lib/libc++.so.1.0
+7f3b2cc58000-7f3b2cc5c000 rw-p 00000000 00:00 0 
+7f3b2cc80000-7f3b2cc81000 rw-p 00000000 00:00 0 
+7f3b2cc81000-7f3b2cc83000 rw-p 00000000 00:00 0 
+7fff6a587000-7fff6a59c000 rw-p 00000000 00:00 0                          [stack]
+7fff6a5ff000-7fff6a600000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+----------------------------------------------------------------
+stack_memory (run under asan) [1 points]
+Result: FAILED: Memory errors detected by ASAN
+Took unknown time (1000ms timeout)
+Output:
+----------------------------------------------------------------
+Running stack_memory [worth 1 points, output below]
+=================================================================
+==15552==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000f280 at pc 0x74c8ea bp 0x7fffcb832150 sp 0x7fffcb832148
+READ of size 4 at 0x61500000f280 thread T0
+    #0 0x74c8e9 in cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x74c8e9)
+    #1 0x7b9d7d in cs225::stack<int>::stack(cs225::stack<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x7b9d7d)
+    #2 0x697402 in proxy_test::stack_memory(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x697402)
+    #3 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #4 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #5 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #6 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #7 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #8 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #9 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #10 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #11 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+    #12 0x46cae8 in _start (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x46cae8)
+
+0x61500000f280 is located 0 bytes to the right of 512-byte region [0x61500000f080,0x61500000f280)
+allocated by thread T0 here:
+    #0 0x45719e in operator new[](unsigned long) /class/cs225/llvm/src/llvm/projects/compiler-rt/lib/asan/asan_new_delete.cc:54
+    #1 0x74b0b3 in cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x74b0b3)
+    #2 0x7b9d7d in cs225::stack<int>::stack(cs225::stack<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x7b9d7d)
+    #3 0x697402 in proxy_test::stack_memory(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x697402)
+    #4 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #5 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #6 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #7 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #8 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #9 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #10 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #11 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #12 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&)
+Shadow bytes around the buggy address:
+  0x0c2a7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9e50:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:     fa
+  Heap right redzone:    fb
+  Freed heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==15552==ABORTING
+Result: FAILED:
+Memory Errors Detected by ASAN
+
+----------------------------------------------------------------
+queue_memory (run under asan) [1 points]
+Result: FAILED: Memory errors detected by ASAN
+Took unknown time (1000ms timeout)
+Output:
+----------------------------------------------------------------
+Running queue_memory [worth 1 points, output below]
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+=================================================================
+==15572==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x61500000f280 at pc 0x74c8ea bp 0x7fff805f7c50 sp 0x7fff805f7c48
+READ of size 4 at 0x61500000f280 thread T0
+    #0 0x74c8e9 in cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x74c8e9)
+    #1 0x7bbd7d in cs225::queue<int>::queue(cs225::queue<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x7bbd7d)
+    #2 0x6a5faf in proxy_test::queue_memory(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x6a5faf)
+    #3 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #4 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #5 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #6 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #7 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #8 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #9 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #10 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #11 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+    #12 0x46cae8 in _start (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x46cae8)
+
+0x61500000f280 is located 0 bytes to the right of 512-byte region [0x61500000f080,0x61500000f280)
+allocated by thread T0 here:
+    #0 0x45719e in operator new[](unsigned long) /class/cs225/llvm/src/llvm/projects/compiler-rt/lib/asan/asan_new_delete.cc:54
+    #1 0x74b0b3 in cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x74b0b3)
+    #2 0x7bbd7d in cs225::queue<int>::queue(cs225::queue<int>&&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x7bbd7d)
+    #3 0x6a5faf in proxy_test::queue_memory(util::sizedpipestream<512ul>&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x6a5faf)
+    #4 0x4b87db in monad_shared::unit_test_input::execute(util::sizedpipestream<512ul>&) const (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4b87db)
+    #5 0x49bd79 in proxy::test_execution::child_test() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x49bd79)
+    #6 0x48adeb in proxy::test_execution::child() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x48adeb)
+    #7 0x484b25 in proxy::RunTests::run_single_test(monad_shared::unit_test_input const&) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x484b25)
+    #8 0x47cd18 in proxy::RunTests::run_single_test(char const*) (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47cd18)
+    #9 0x47bd91 in proxy::RunTests::execute_by_mode() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47bd91)
+    #10 0x47798c in proxy::RunTests::execute() (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x47798c)
+    #11 0x4755aa in main (/dev/shm/geigle1/su14/monad/mp_parse_grade/proxy-asan+0x4755aa)
+    #12 0x3a26a1ed1c in __libc_start_main (/lib64/libc.so.6+0x3a26a1ed1c)
+
+SUMMARY: AddressSanitizer: heap-buffer-overflow ??:0 cs225::circ_array<int>::circ_array(cs225::circ_array<int>&&)
+Shadow bytes around the buggy address:
+  0x0c2a7fff9e00: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9e10: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e20: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e30: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e40: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+=>0x0c2a7fff9e50:[fa]fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+  0x0c2a7fff9e60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9e90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+  0x0c2a7fff9ea0: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+Shadow byte legend (one shadow byte represents 8 application bytes):
+  Addressable:           00
+  Partially addressable: 01 02 03 04 05 06 07 
+  Heap left redzone:     fa
+  Heap right redzone:    fb
+  Freed heap region:     fd
+  Stack left redzone:    f1
+  Stack mid redzone:     f2
+  Stack right redzone:   f3
+  Stack partial redzone: f4
+  Stack after return:    f5
+  Stack use after scope: f8
+  Global redzone:        f9
+  Global init order:     f6
+  Poisoned by user:      f7
+  ASan internal:         fe
+==15572==ABORTING
+Result: FAILED:
+Memory Errors Detected by ASAN
+
+----------------------------------------------------------------
+queue_push_amortized_constant [1 points]
+Result: FAILED: Timed out (10000ms)
+Took 10000ms (10000ms timeout)
+Output:
+----------------------------------------------------------------
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+n
+
+----------------------------------------------------------------
+parser_no_numbers [3 points]
+Result: FAILED: Aborted
+Took 0ms (1000ms timeout)
+Output:
+----------------------------------------------------------------
+number
+number
+number
+number
+operation
+what
+number
+what
+number
+head: 1
+head: 1
+number
+number
+number
+number
+number
+number
+number
+number
+what
+terminating with uncaught exception of type std::out_of_range: out of range!
+
+----------------------------------------------------------------
+parser_unary_binary [3 points]
+Result: FAILED: unit_tests.cpp:850: Assertion (relequal(root->value(), -2)) failed
+Took 0ms (1000ms timeout)
+Output:
+----------------------------------------------------------------
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+number
+operation
+what
+number
+number
+operation
+number
+number
+operation
+number
+number
+operation
+number
+what
+number
+number
+number
+number
+head: 2
+head: 2
+head: 1
+head: 2
+
+
+----------------------------------------------------------------
+Total score...
+================================================================
+TOTAL SCORE: 81
+

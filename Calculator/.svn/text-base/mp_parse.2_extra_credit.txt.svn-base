@@ -1,0 +1,7 @@
+Monad Autograder
+Testing mp_parse.2 at 2014-07-11 23:34:43
+
+"On two occasions, I have been asked [by members of Parliament], 'Pray, Mr. Babbage, if you put into the machine wrong figures, will the right answers come out?' I am not able to rightly apprehend the kind of confusion of ideas that could provoke such a question." ~ Charles Babbage
+
+Setting up test environment...
+Error: /dev/shm/geigle1/su14/monad/su14-cs225/hzhang91/mp_parse/include/node.h does not exist.

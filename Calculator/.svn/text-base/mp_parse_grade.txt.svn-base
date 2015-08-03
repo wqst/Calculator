@@ -1,0 +1,45 @@
+Monad Autograder
+Testing mp_parse at 2014-07-13 23:33:59
+
+"I think Microsoft named .NET so it wouldn't show up in a Unix directory listing." ~ Oktal
+
+Setting up test environment...
+Compiling...
+================================================================
+src/parser.cpp:59:13: error: value of type 'cs225::token_type' is not contextually convertible to 'bool'
+        if (tok->type():operation)
+            ^~~~~~~~~~~
+src/parser.cpp:61:13: error: use of undeclared identifier 'ops'; did you mean 'ops_'?
+            ops.push(token->front())   
+            ^~~
+            ops_
+src/parser.cpp:40:35: note: 'ops_' declared here
+    stack<std::unique_ptr<token>> ops_;
+                                  ^
+src/parser.cpp:61:22: error: 'token' does not refer to a value
+            ops.push(token->front())   
+                     ^
+include/token.h:37:7: note: declared here
+class token
+      ^
+src/parser.cpp:63:18: error: value of type 'cs225::token_type' is not contextually convertible to 'bool'
+        else if (tok->type())  
+                 ^~~~~~~~~~~
+src/parser.cpp:65:13: error: use of undeclared identifier 'nodes'; did you mean 'nodes_'?
+            nodes.push(token->front())   
+            ^~~~~
+            nodes_
+src/parser.cpp:45:34: note: 'nodes_' declared here
+    stack<std::unique_ptr<node>> nodes_;
+                                 ^
+src/parser.cpp:65:24: error: 'token' does not refer to a value
+            nodes.push(token->front())   
+                       ^
+include/token.h:37:7: note: declared here
+class token
+      ^
+6 errors generated.
+make: *** [parser.o] Error 1
+
+
+exec("./proxy", "./proxy", "--nodetailed", "./monad: line 37:  7388 Segmentation fault      "$SOURCE_DIR/pure-monad" $@
